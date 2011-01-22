@@ -20,4 +20,4 @@ with this
 
 h2. Links
 
-Take a look at my blog "http://web-rocker.de":http://web-rocker.de
+Take a look at my German blog "http://web-rocker.de":http://web-rocker.de and a "detailed article about the advantage of using the AjaxAction view helper":http://web-rocker.de/2011/01/ajaxaction-view-helper-for-zend-framework/
