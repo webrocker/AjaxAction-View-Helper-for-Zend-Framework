@@ -32,11 +32,45 @@ class Zend_View_Helper_AjaxAction extends Zend_View_Helper_Abstract
      * @var string
      */
     public $defaultModule;
-
+    
+    /**
+     * @var Zend_Cache_Core
+     */
+    protected $cache = false;
+    
+    /**
+     * @var boolean
+     */
+    protected $enabled = true;
+    
     public function __construct()
     {
         $front = Zend_Controller_Front::getInstance();
+        $config = $front->getParam('bootstrap')->getOption('cacheaction');
+        
+        if (!$config)
+        {
+            $this->enabled = false;
+            return;
+        }
+        
+        if(isset($config['enabled']) && "false" == $config['enabled'])
+        {
+            $this->enabled = false;
+            return;
+        }
+        
+        $cache = 'action';
+        if(isset($config['cache']))
+        {
+            $cache = $config['cache'];
+        }
+        
         $this->defaultModule = $front->getDefaultModule();
+        $manager = $front
+                  ->getParam('bootstrap')
+                  ->getResource('cachemanager');
+        $this->cache = $manager->getCache($cache);
     }
 
     public function ajaxAction($action, $controller, $module = null, array $params = array(), $partial='')
@@ -49,14 +83,23 @@ class Zend_View_Helper_AjaxAction extends Zend_View_Helper_Abstract
         $params['controller'] = $controller;
         $params['action']     = $action;
         $params['module']     = $module;
+        
+        $url = $this->view->url($params);
+        $cacheKey = md5($url);
 
         /*
-         * return patial that does the ajax magic
+         * if we have a response, deliver the body
          */
-        $url = $this->view->url($params);
-        
+        if ($this->cache && false !==($cachedResponse = $this->cache->load($cacheKey)))
+        {
+            return $cachedResponse->getBody();
+        }
+
+        /*
+         * return patial that does the ajax
+         */
         $params['ajaxActionUrl'] = $url;
-        $params['ajaxActionId']  = md5($url);
+        $params['ajaxActionId']  = $cacheKey;
 
         return $this->view->partial($partial, $module, $params);
     }
