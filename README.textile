@@ -1,14 +1,15 @@
 h2. Synopsis
 
 AjaxAction view helper is a plug-in replacement for the Action view helper. It transforms synchronous requests to asynchronous XHR-calls with no frills.
+CacheAction plugin is a FrontController plugin, that enables You to cache specific routes. In combination with AjaxAction, no user will ever have to wait for a webpage to be rendered :-)
 
-h2. Installation
+h2. Installation (AjaxAction standalone)
 
 Just copy the files AjaxAction.php to Your APPLICATION_PATH/views/helpers directory,  ajax.phtml to Your APPLICATION_PATH/views/_partials directory and make sure that the autoloader can load the helper. If You just created a Zend Framework project with Zend Studio or zf-command You should be fine without any modifications.
 
 What JavaScript library You use is up to You, just modify the APPLICATION_PATH/views/_partials/ajax.phtml to work with Your library.
 
-h2. Usage
+h3. Usage
 
 In view just replace
 
@@ -17,6 +18,37 @@ In view just replace
 with this
 
 <?php echo $this->ajaxAction('gettweets', 'content', null, array(), '_partials/ajax.phtml'); ?>
+
+h2. Installation (CacheAction standalone)
+
+Just copy the file CacheAction.php to Your APPLICATION_PATH/plugins directory.
+Setup CacheAction in Your application.ini as follows:
+
+1. Setup autoloadernamespaces to load classes starting with "Webrocker_".
+autoloadernamespaces.0 = "Webrocker_"
+
+2. Setup cacheaction
+cacheaction.cache = "action"
+cacheaction.enabled = "true"
+resources.frontController.plugins.cacheaction.class = "Webrocker_Plugin_CacheAction"
+
+In this example "action" is the cachehandle to use in cachemanager ressource.
+
+3. Setup a route to be cached
+resources.router.routes.content.route = "/content/:action/*"
+resources.router.routes.content.defaults.controller = "content"
+resources.router.routes.content.defaults.action = "index"
+resources.router.routes.content.defaults.module = "default"
+resources.router.routes.content.defaults.cacheaction-ttl = "20"
+
+The parameter "cacheaction-ttl" enables action caching and sets the time to live of cache-entries to 20 seconds.
+
+h2. CacheAction response headers
+*x-cacheaction-state: route not cached* | route has no cacheaction-ttl parameter, caching disabled
+*x-cacheaction-state: disabled by config* | parameter cacheaction.enabled = "false", caching disabled
+*x-cacheaction-hit: <md5hash>* | cache hit, response found in cache
+*x-cacheaction-stored: <md5hash> ttl <ttl> | cache missed and result was stored for <ttl> seconds
+
 
 h2. Links
 
