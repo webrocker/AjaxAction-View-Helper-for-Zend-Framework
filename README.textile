@@ -35,7 +35,7 @@ resources.frontController.plugins.cacheaction.class = "Webrocker_Plugin_CacheAct
 In this example "action" is the cachehandle to use in cachemanager ressource.
 
 3. Setup a route to be cached
-resources.router.routes.content.route = "/content/:action/*"
+resources.router.routes.content.route = "/content/:action/\*"
 resources.router.routes.content.defaults.controller = "content"
 resources.router.routes.content.defaults.action = "index"
 resources.router.routes.content.defaults.module = "default"
