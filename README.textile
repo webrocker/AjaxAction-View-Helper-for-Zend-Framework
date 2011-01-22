@@ -1,0 +1,23 @@
+h2. Synopsis
+
+AjaxAction view helper is a plug-in replacement for the Action view helper. It transforms synchronous requests to asynchronous XHR-calls with no frills.
+
+h2. Installation
+
+Just copy the files AjaxAction.php to Your APPLICATION_PATH/views/helpers directory,  ajax.phtml to Your APPLICATION_PATH/views/_partials directory and make sure that the autoloader can load the helper. If You just created a Zend Framework project with Zend Studio or zf-command You should be fine without any modifications.
+
+What JavaScript library You use is up to You, just modify the APPLICATION_PATH/views/_partials/ajax.phtml to work with Your library.
+
+h2. Usage
+
+In view just replace
+
+<?php echo $this->action('gettweets', 'content', null, array()); ?>
+
+with this
+
+<?php echo $this->ajaxAction('gettweets', 'content', null, array(), '_partials/ajax.phtml'); ?>
+
+h2. Links
+
+Take a look at my blog http://web-rocker.de
