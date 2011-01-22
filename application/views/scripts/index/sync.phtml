@@ -1,0 +1,16 @@
+<!-- script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script -->
+<div>
+    <h1>old-school version</h1>
+    <ul>
+        <li><a href="/index/async">open the same page using AjaxAction helper</a></li>
+    </ul>
+    
+    <h3>This is a REALLY expensive navigation</h3>
+    <?php echo $this->action('getnavigation', 'content', null, array()); ?>
+ 
+    <h3>This is the content</h3>
+    <?php echo $this->action('getcontent', 'content', null, array()); ?>
+    
+    <h3>This is a cool result of a call to the Twitter-API</h3>
+    <?php echo $this->action('gettweets', 'content', null, array()); ?>
+</div>
