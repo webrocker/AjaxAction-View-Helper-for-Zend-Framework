@@ -44,11 +44,10 @@ resources.router.routes.content.defaults.cacheaction-ttl = "20"
 The parameter "cacheaction-ttl" enables action caching and sets the time to live of cache-entries to 20 seconds.
 
 h2. CacheAction response headers
-*x-cacheaction-state: route not cached* | route has no cacheaction-ttl parameter, caching disabled
-*x-cacheaction-state: disabled by config* | parameter cacheaction.enabled = "false", caching disabled
-*x-cacheaction-hit: <md5hash>* | cache hit, response found in cache
-*x-cacheaction-stored: <md5hash> ttl <ttl> | cache missed and result was stored for <ttl> seconds
-
+x-cacheaction-state: route not cached | route has no cacheaction-ttl parameter, caching disabled
+x-cacheaction-state: disabled by config | parameter cacheaction.enabled = "false", caching disabled
+x-cacheaction-hit: <md5hash> | cache hit, response found in cache
+x-cacheaction-stored: <md5hash> ttl <ttl> | cache missed and result was stored for <ttl> seconds
 
 h2. Links
 
