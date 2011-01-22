@@ -49,9 +49,9 @@ x-cacheaction-state: route not cached -> route has no cacheaction-ttl parameter,
 
 x-cacheaction-state: disabled by config -> parameter cacheaction.enabled = "false", caching disabled
 
-x-cacheaction-hit: <md5hash> -> cache hit, response found in cache
+x-cacheaction-hit: md5hash -> cache hit, response found in cache
 
-x-cacheaction-stored: <md5hash> ttl <ttl> -> cache missed and result was stored for <ttl> seconds
+x-cacheaction-stored: md5hash ttl n -> cache missed and result was stored for n seconds
 
 h2. Links
 
