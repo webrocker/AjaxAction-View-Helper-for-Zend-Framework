@@ -104,8 +104,9 @@ class Webrocker_Plugin_CacheAction extends Zend_Controller_Plugin_Abstract
         {
             return;
         }
-        $this->getResponse()->setHeader('x-cacheaction-stored', $this->cacheKey . ' ttl ' . $this->ttl);
+        
         $this->cache->save($this->getResponse(), $this->cacheKey, array(), $this->ttl);
+        $this->getResponse()->setHeader('x-cacheaction-stored', $this->cacheKey . ' ttl ' . $this->ttl);
     }
     
 }
